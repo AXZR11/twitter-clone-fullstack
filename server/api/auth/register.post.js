@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
     if (!username || !email || !password || !repeatPassword || !name) {
         return sendError(event, createError({ statusCode: 400, 
-            statusMessgae: 'Invalid params' }))
+            statusMessagae: 'Invalid params' }))
     }
 
     return{
