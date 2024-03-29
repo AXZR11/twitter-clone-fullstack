@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 import { generateTokens } from "../../utils/jwt.js"
 import { userTransformer } from "~~/server/transformers/user.js"
 import { createRefreshToken } from "../../db/refreshTokens.js"
+import { sendError } from "h3"
 
 export default defineEventHandler(async (event) => {
     const body = await useBody(event)
@@ -36,18 +37,15 @@ export default defineEventHandler(async (event) => {
             statusMessage: 'Username or password is invalid'
         }))
     }
-    // Generate Tokens
-    // Access token
-    // Refresh token
+    
     const { accessToken, refreshToken } = generateTokens(user)
 
-    // Save it inside db
     await createRefreshToken ({
         token: refreshToken,
         userId: user.id
     })
 
-    // add http only cookie
+    sendRefreshToken(event, refreshToken)
 
     return {
         accessToken: accessToken, user: userTransformer(user)
