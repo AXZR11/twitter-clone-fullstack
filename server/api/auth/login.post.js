@@ -1,12 +1,12 @@
 import { getUserByUsername } from "../../db/users.js"
 import bcrypt from "bcrypt"
-import { generateTokens } from "../../utils/jwt.js"
+import { generateTokens, sendRefreshToken } from "../../utils/jwt.js"
 import { userTransformer } from "~~/server/transformers/user.js"
 import { createRefreshToken } from "../../db/refreshTokens.js"
 import { sendError } from "h3"
 
 export default defineEventHandler(async (event) => {
-    const body = await useBody(event)
+    const body = await readBody(event)
 
     const { username, password } = body
 
@@ -48,6 +48,6 @@ export default defineEventHandler(async (event) => {
     sendRefreshToken(event, refreshToken)
 
     return {
-        accessToken: accessToken, user: userTransformer(user)
+        access_Token: accessToken, user: userTransformer(user)
     }
 })
