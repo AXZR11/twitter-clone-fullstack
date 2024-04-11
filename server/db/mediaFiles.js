@@ -1,6 +1,6 @@
 import { prisma } from ".";
 
-const createMediaFile = (mediaFile) => {
+export const createMediaFile = (mediaFile) => {
     return prisma.mediaFile.create({
         data: mediaFile
     })
