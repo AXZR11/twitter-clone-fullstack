@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         return
     }
 
-    const token = event.node.req.headers['authorization']?.split(' ')[1]
+    const token = event.node.req.headers[`authorization`]?.split(' ')[1]
 
     const decoded = decodeAccessToken(token)
 
