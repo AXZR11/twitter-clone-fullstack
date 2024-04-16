@@ -13,11 +13,11 @@ export default defineEventHandler(async (event) => {
             if(err) {
                 reject(err)
             }
-            resolve({fields, files})
+            resolve({ fields, files })
         })
     })
 
-    const {fields, files} = response
+    const { fields, files } = response
 
     const userId = event.context?.auth?.user?.id
 
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
         console.log(response)
 
         return createMediaFile ({
-            url: cloudinaryResource.secure_rl,
+            url: cloudinaryResource.secure_url,
             providerPublicId: cloudinaryResource.public_id,
             userId: userId,
             tweetId: tweet.id
@@ -46,7 +46,6 @@ export default defineEventHandler(async (event) => {
     await Promise.all(filePromises)
 
     return {
-       // tweet: tweetTransformer(tweet)
-       files
+       tweet: tweetTransformer(tweet)
     }
 })
